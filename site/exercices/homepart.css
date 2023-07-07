@@ -113,3 +113,8 @@
     height: 3.4rem;
     width: 3.4rem;
   }
+
+
+  .closed-menu {
+    left: -100% !important;
+  }
