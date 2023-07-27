@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash/env bash
 # Read the content of /etc/passwd
 
 while IFS=":" read -r username x uid gid info homedir shell; do
