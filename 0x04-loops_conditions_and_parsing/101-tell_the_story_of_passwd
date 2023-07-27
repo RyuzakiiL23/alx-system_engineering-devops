@@ -1,13 +1,8 @@
-#!/bin/bash/env bash
-# Read the content of /etc/passwd
+#!/usr/bin/env bash
+# Tells a story based on the contents of the `/etc/passwd` file.
 
-while IFS=":" read -r username x uid gid info homedir shell; do
-    IFS="," read -r primary_group description <<< "$info"
-    username="$(echo "$username" | tr -d ' ')"
-    gid="$(echo "$gid" | tr -d ' ')"
-    homedir="$(echo "$homedir" | tr -d ' ')"
-    shell="$(echo "$shell" | tr -d ' ')"
-    primary_group="$(echo "$primary_group" | tr -d ' ')"
-    description="$(echo "$description" | tr -d ' ')"
-    echo "The user $username is part of the $gid gang, lives in $homedir and rides $shell. $gid's place is protected by the passcode x, more info about the user here: $description"
+while IFS=':' read -r username password uid gid info home shell; do
+	    echo "The user $username is part of the $gid gang, lives in "/
+	    "$homedir and rides $shell. $gid's place is protected by "/
+	    "the passcode x, more info about the user here: $description"
 done < "/etc/passwd"
