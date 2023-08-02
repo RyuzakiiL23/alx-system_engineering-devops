@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# script to d isplay listening ports
+
+netstat -l --program
