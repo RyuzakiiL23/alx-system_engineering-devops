@@ -1,4 +1,4 @@
-# Networking basics :computer_network:
+# Networking basics &#x1F310
 
 ## Learning Objectives :heavy_check_mark:
 
