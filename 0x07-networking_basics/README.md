@@ -1,4 +1,4 @@
-Networking basics # :computer_network:
+# Networking basics :computer_network:
 
 ## Learning Objectives :heavy_check_mark:
 
