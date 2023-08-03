@@ -1,8 +1,11 @@
-# Learning Objectives :bulb:
+# Networking basics #2 📡
+
+# Learning Objectives :heavy_check_mark:
 
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 
 ### General
+
 - What is localhost/127.0.0.1
 - What is 0.0.0.0
 - What is /etc/hosts
@@ -18,6 +21,7 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 ## Requirements :page_with_curl:
 
 ### General
+
 - Allowed editors: vi, vim, emacs
 - All your files will be interpreted on Ubuntu 20.04 LTS
 - All your files should end with a new line
