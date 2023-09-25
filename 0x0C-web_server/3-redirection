@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Reconfigurate a new server and add a link using 301 http status
 
+sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
 echo 'Hello World!' > /var/www/html/index.html
@@ -22,7 +23,8 @@ SERVER_CONFIG=\
 bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-enabled/default"
 
 if [ "$(pgrep -c nginx)" -le 0 ]; then
-	service nginx start
+	sudo nginx -s start
 else
-	service nginx restart
+	sudo nginx -s reload
+else
 fi
