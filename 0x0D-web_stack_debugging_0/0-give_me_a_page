@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # fixing whatever needed to be fixed
 
+echo "Hello Holberton" > /var/www/public.html
 sudo service apache2 start
