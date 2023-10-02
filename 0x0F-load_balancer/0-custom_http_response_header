@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Configure your Nginx to call servers by their names
+
+apt-get update
+apt-get install nginx -y
+sudo ufw allow 'Nginx HTTP'
+mkdir -p /var/www/html/
+sudo chmod -R 755 /var/www
+echo 'Hello World!' > /var/www/html/index.html
+echo "Ceci n'est pas une page!" > /var/www/html/404.html
+
+SERVER_CONFIG=$(cat <<EOF
+map \$hostname \$var1 {
+    ~*01\$ web-01;
+    default web-02;
+}
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By \$var1;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+    if (\$request_filename ~ redirect_me){
+        rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+    }
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+}
+EOF
+)
+
+echo "$SERVER_CONFIG" > /etc/nginx/sites-enabled/default
+
+if [ "$(pgrep -c nginx)" -le 0 ]; then
+        service nginx start
+else
+        service nginx restart
+fi
