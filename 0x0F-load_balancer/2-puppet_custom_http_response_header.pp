@@ -1,32 +1,30 @@
 # Convert task 0 to puppet
 
-class nginx_example {
+class nginx {
   package { 'nginx':
-    ensure => 'installed',
+    ensure => installed,
   }
 
   service { 'nginx':
-    ensure => 'running',
+    ensure => running,
     enable => true,
   }
 
-  file { '/var/www/html/index.nginx-debian.html':
+  file { '/var/www/html/index.html':
     ensure  => file,
     content => 'Hello World!',
-    require => Package['nginx'],
   }
 
   file { '/etc/nginx/sites-enabled/default':
     ensure  => file,
-    content => "server {\n  add_header X-Served-By $hostname;\n}\n",
-    require => Package['nginx'],
+    content => "server {
+                  listen 80 default_server;
+                  listen [::]:80 default_server;
+									add_header X-Served-By \$hostname;
+                  root /var/www/html;
+                  index index.html index.htm index.nginx-debian.html;
+                  server_name _;
+                }",
     notify  => Service['nginx'],
-  }
-
-  exec { 'ufw_allow_nginx':
-    command     => '/usr/sbin/ufw allow "Nginx HTTP"',
-    path        => ['/usr/sbin', '/usr/bin'],
-    unless      => '/usr/sbin/ufw status | grep "Nginx HTTP"',
-    subscribe   => Package['nginx'],
   }
 }
