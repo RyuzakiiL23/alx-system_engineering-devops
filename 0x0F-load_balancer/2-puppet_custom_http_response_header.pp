@@ -1,30 +1,25 @@
 # Convert task 0 to puppet
 
-class nginx {
-  package { 'nginx':
-    ensure => installed,
-  }
+exec {'update':
+  provider => shell,
+  command  => 'sudo apt-get update -y',
+  before   => Exec['install Nginx'],
+}
 
-  service { 'nginx':
-    ensure => running,
-    enable => true,
-  }
+exec {'install Nginx':
+  provider => shell,
+  command  => 'sudo apt-get install nginx -y',
+  before   => Exec['add_header'],
+}
 
-  file { '/var/www/html/index.html':
-    ensure  => file,
-    content => 'Hello World!',
-  }
+exec { 'add_header':
+  provider    => shell,
+  environment => ["MYNAME=${hostname}"],
+  command     => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\default;/include \/etc\/nginx\/sites-enabled\/\default;\n\tadd_header X-Served-By \"$MYNAME\";/" /etc/nginx/nginx.conf',
+  before      => Exec['restart Nginx'],
+}
 
-  file { '/etc/nginx/sites-enabled/default':
-    ensure  => file,
-    content => "server {
-                  listen 80 default_server;
-                  listen [::]:80 default_server;
-									add_header X-Served-By \$hostname;
-                  root /var/www/html;
-                  index index.html index.htm index.nginx-debian.html;
-                  server_name _;
-                }",
-    notify  => Service['nginx'],
-  }
+exec { 'restart Nginx':
+  provider => shell,
+  command  => 'sudo service nginx restart',
 }
