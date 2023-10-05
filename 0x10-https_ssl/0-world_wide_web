@@ -1,0 +1,31 @@
+#!/bin/bash
+# Display information about subdomains
+
+audit_subdomain() {
+    local domain="$1"
+    local subdomain="$2"
+    
+    dns_records=$(dig +short "$subdomain.$domain")
+    record_type=$(echo "$dns_records" | awk 'NR==1 { if (/[.0-9]+/) { print "A" } else { print "CNAME" } }')
+    echo "The subdomain $subdomain is a $record_type record and points to $dns_records"
+}
+
+main() {
+    local domain="$1"
+    local subdomain="$2"
+
+    if [ -z "$domain" ]; then
+        echo "Usage: $0 <domain> [subdomain]"
+        exit 1
+    fi
+
+    if [ -z "$subdomain" ]; then
+        subdomains=("www" "lb-01" "web-01" "web-02")
+        for sub in "${subdomains[@]}"; do
+            audit_subdomain "$domain" "$sub"
+        done
+    else
+        audit_subdomain "$domain" "$subdomain"
+    fi
+}
+main "$1" "$2"
