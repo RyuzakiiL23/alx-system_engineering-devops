@@ -10,22 +10,13 @@ audit_subdomain() {
     echo "The subdomain $subdomain is a $record_type record and points to $dns_records"
 }
 
-main() {
-    local domain="$1"
-    local subdomain="$2"
-
-    if [ -z "$domain" ]; then
-        echo "Usage: $0 <domain> [subdomain]"
-        exit 1
-    fi
-
-    if [ -z "$subdomain" ]; then
-        subdomains=("www" "lb-01" "web-01" "web-02")
-        for sub in "${subdomains[@]}"; do
-            audit_subdomain "$domain" "$sub"
-        done
-    else
-        audit_subdomain "$domain" "$subdomain"
-    fi
-}
-main "$1" "$2"
+if [ "$#" == 1 ]
+then
+  audit_subdomain "$1" "www"
+  audit_subdomain "$1" "lb-01"
+  audit_subdomain "$1" "web-01"
+  audit_subdomain "$1" "web-02"
+elif [ "$#" == 2 ]
+then
+  audit_subdomain "$1" "$2"
+fi
