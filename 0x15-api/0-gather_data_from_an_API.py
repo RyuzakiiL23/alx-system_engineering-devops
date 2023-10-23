@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Python script that use a given REST API"""
+import json
 import requests
 import sys
-import json
 
 if __name__ == "__main__":
     user_id = eval(sys.argv[1])
