@@ -30,4 +30,4 @@ if __name__ == "__main__":
     for elem in res_list:
         for k, v in elem.items():
             if k == "completed" and v is True:
-                print("     {}".format(elem['title']))
+                print("\t {}".format(elem['title']))
