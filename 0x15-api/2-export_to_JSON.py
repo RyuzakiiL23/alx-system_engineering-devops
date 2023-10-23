@@ -6,7 +6,7 @@ import sys
 
 if __name__ == "__main__":
     user_id = eval(sys.argv[1])
-    url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(user_id)
+    url = "https://jsonplaceholder.typicode.com/todos"
     response = requests.get(url).text
     res_list = json.loads(response)
 
@@ -16,8 +16,8 @@ if __name__ == "__main__":
     user_name = user_dict["username"]
 
     new_res_list = []
-    for d in res_list:
-        new_elem = {'task': d['title'], 'completed': d['completed'],
+    for elem in res_list:
+        new_elem = {'task': elem['title'], 'completed': elem['completed'],
                     "username": user_name}
         new_res_list.append(new_elem)
     file_path = "{}.json".format(sys.argv[1])
