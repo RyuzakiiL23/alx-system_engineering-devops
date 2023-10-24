@@ -1,37 +1,40 @@
 #!/usr/bin/python3
-"""Python script that uses a given REST API and creates a JSON"""
+"""Python script that use a given REST API and create a CSV file"""
 import json
 import requests
-import sys
-
-
-def to_json():
-    all_user_data = {}
-
-    for user_id in range(1, 11):
-        url = f"https://jsonplaceholder.typicode.com/todos?userId={user_id}"
-        response = requests.get(url)
-
-        res_list = response.json()
-        user_url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
-        user_response = requests.get(user_url)
-
-        user_dict = user_response.json()
-        user_name = user_dict["username"]
-
-        new_res_list = []
-        for elem in res_list:
-            new_elem = {"username": user_name, 'task': elem['title'],
-                        'completed': elem['completed']}
-            new_res_list.append(new_elem)
-
-        all_user_data[user_id] = new_res_list
-
-    file_path = "todo_all_users.json"
-
-    with open(file_path, "w") as file:
-        json.dump(all_user_data, file)
-
 
 if __name__ == "__main__":
-    to_json()
+    url = "https://jsonplaceholder.typicode.com/todos"
+    response = requests.get(url).text
+    res_list = json.loads(response)
+    
+    user_name = []
+    for i in range(1, 11):
+        user_url = "https://jsonplaceholder.typicode.com/users/{}".format(i)
+        user_response = requests.get(user_url).text
+        user_dict = json.loads(user_response)
+        user_name.append(user_dict["username"])
+   # print(user_name)
+
+    count = 0
+    new_res_list = [
+            [],[],[],[],[],
+            [],[],[],[],[]
+            ]
+
+    for elem in res_list:
+        if (elem["userId"] == count + 1):
+            new_elem = {"username": user_name[count], 'task': elem['title'],
+                        'completed': elem['completed']}
+            new_res_list[count].append(new_elem)
+        else:
+            if count < 11:
+                count += 1
+            else:
+                break
+
+    final_dict = {str(k): v for k, v in zip(range(1, 11), new_res_list)}
+    # print(final_dict)
+    
+    with open("todo_all_employees.json", "w") as file:
+        json.dump(final_dict, file)
