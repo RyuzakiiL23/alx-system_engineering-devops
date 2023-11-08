@@ -1,9 +1,10 @@
 #!/usr/bin/python3
+"""Query that returns the 10 hot titles"""
 import requests
 
 
 def top_ten(subreddit):
-    """Query that returns the number of redit subscribers"""
+    """Function that returns the 10 hot titles"""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
 
     response = requests.get(url, headers=None, params={"limit": 10},
