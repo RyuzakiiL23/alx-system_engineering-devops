@@ -6,8 +6,14 @@ import requests
 def top_ten(subreddit):
     """Function that returns the 10 hot titles"""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    header = {
+        "User-Agent": "MyRedditBot:v1.0.0"
+    }
+    params = {
+        "limit": 10
+    }
 
-    response = requests.get(url, headers=None, params={"limit": 10},
+    response = requests.get(url, headers=header, params={"limit": 10},
                             allow_redirects=False)
     if response.status_code == 404:
         print("None")
