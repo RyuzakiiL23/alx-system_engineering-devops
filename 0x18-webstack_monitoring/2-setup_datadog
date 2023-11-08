@@ -1,10 +1,1 @@
-{'dashboards': [{'author_handle': 'elhamrani.omar23@gmail.com',
-                 'created_at': datetime.datetime(2023, 11, 8, 7, 52, 19, 835927, tzinfo=tzutc()),
-                 'deleted_at': None,
-                 'description': None,
-                 'id': '8q6-5av-wm7',
-                 'is_read_only': False,
-                 'layout_type': 'ordered',
-                 'modified_at': datetime.datetime(2023, 11, 8, 8, 14, 30, 763982, tzinfo=tzutc()),
-                 'title': 'xx-web-01',
-                 'url': '/dashboard/8q6-5av-wm7/xx-web-01'}]}
+8q6-5av-wm7
