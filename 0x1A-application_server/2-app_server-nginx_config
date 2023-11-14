@@ -1,0 +1,17 @@
+# Serving the page both locally and on its public IP on port
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By 387608-web-01;
+    root   /var/www/html;
+    index  index.html index.htm;
+
+    location /hbnb_static {
+        alias /data/web_static/current;
+        index index.html index.htm;
+    }
+    location /airbnb-onepage {
+        proxy_pass http://localhost:5000/airbnb-onepage/;
+    }
+}
